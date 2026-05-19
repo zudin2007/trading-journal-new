@@ -1,87 +1,141 @@
-# Trading Journal · Risk & Reward
+# 📊 Trading Journal
 
-Dashboard jurnal trading untuk saham & kripto dengan analisis risk/reward, position sizing, money management, dan tracking pertumbuhan modal harian/bulanan/tahunan.
+Dashboard jurnal trading dengan analisis **Risk & Reward**, kalkulator **position sizing**, dan **tracking pertumbuhan modal** harian/bulanan/tahunan untuk saham dan kripto.
 
-## Fitur
+![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
 
-- **Jurnal Trade** — catat trade saham & kripto (long/short) dengan entry, SL, TP, qty
-- **Harga Real-time** — auto-fetch harga dari Binance/Coinbase/CoinGecko (kripto) dan Yahoo Finance via CORS proxy (saham US & IDX)
-- **Money Management** — kalkulator position sizing otomatis berdasarkan % risk per trade
-- **Analitik** — win rate, profit factor, R-multiple, equity curve, distribusi hasil
-- **Modal/Pertumbuhan** — track equity harian, bulanan, tahunan dengan grafik
-- **Edit Trade** — bisa edit semua data trade (open maupun closed)
-- **Multi Currency** — toggle tampilan USD ↔ IDR
-- **Data Lokal** — tersimpan di `localStorage` browser (tidak ada backend, privacy aman)
+## ✨ Fitur
 
-## Setup
+- **Jurnal Trading** — catat trade saham & kripto dengan entry, SL, TP, qty
+- **Live Price** — harga real-time dari Binance, Coinbase, CoinGecko, Yahoo Finance
+- **Risk/Reward Analysis** — auto-hitung R:R, R-multiple, expectancy, profit factor
+- **Money Management** — kalkulator posisi berbasis % risiko akun (USD/IDR)
+- **Pertumbuhan Modal** — tracking harian, bulanan, tahunan dengan equity curve
+- **Analitik** — win rate, distribusi R-multiple, equity curve
+- **Edit & Delete** — bisa edit trade yang sudah masuk, termasuk yang sudah closed
+- **Persistent Storage** — data tersimpan di browser (localStorage)
+
+## 🚀 Setup di GitHub (Auto-Deploy ke GitHub Pages)
+
+### 1. Buat repository GitHub baru
+
+Buka https://github.com/new dan buat repo baru, contoh nama: `trading-journal`. Set **Public** (gratis Pages butuh public).
+
+### 2. Push code ke repo
+
+Di folder project ini, jalankan di terminal:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: trading journal"
+git branch -M main
+git remote add origin https://github.com/USERNAME/trading-journal.git
+git push -u origin main
+```
+
+Ganti `USERNAME` dengan username GitHub Anda.
+
+### 3. Aktifkan GitHub Pages
+
+1. Buka repo di GitHub → klik tab **Settings**
+2. Sidebar kiri → klik **Pages**
+3. Bagian **Source** → pilih **GitHub Actions**
+
+### 4. Tunggu deployment selesai
+
+1. Klik tab **Actions** di repo
+2. Tunggu workflow "Deploy to GitHub Pages" selesai (warna hijau, ~1-2 menit)
+3. Akses aplikasi di: **https://USERNAME.github.io/trading-journal/**
+
+Setiap kali Anda `git push`, GitHub Actions akan auto-build & deploy ulang. 🎉
+
+## 💻 Development Lokal
+
+Butuh **Node.js 18+** terinstall.
 
 ```bash
 # Install dependencies
 npm install
 
-# Run dev server (http://localhost:5173)
+# Jalankan dev server (biasanya di http://localhost:5173)
 npm run dev
 
 # Build untuk production
 npm run build
 
-# Preview build hasil production
+# Preview production build
 npm run preview
 ```
 
-## Deploy ke GitHub
+## 📁 Struktur Project
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/USERNAME/REPO_NAME.git
-git push -u origin main
+```
+trading-journal/
+├── .github/workflows/deploy.yml   # Auto-deploy ke GitHub Pages
+├── public/                        # Static assets
+├── src/
+│   ├── App.jsx                    # Main app (semua komponen)
+│   ├── main.jsx                   # React entry point
+│   └── index.css                  # Global styles
+├── index.html                     # HTML template
+├── package.json
+├── vite.config.js                 # Vite config (base: "./")
+└── README.md
 ```
 
-## Deploy Public (gratis)
+## 🔌 Sumber Data Harga
 
-### Vercel (paling gampang)
-1. Push ke GitHub dulu
-2. Buka https://vercel.com → Import Project → pilih repo Anda
-3. Vercel auto-detect Vite, klik Deploy. Selesai.
+App melakukan fetch ke API publik berikut secara langsung dari browser:
 
-### Netlify
-1. Push ke GitHub dulu
-2. Buka https://app.netlify.com → New site from Git → pilih repo
-3. Build command: `npm run build`, publish directory: `dist`
+**Kripto** (fallback berurutan):
+1. Binance API (`api.binance.com`)
+2. Coinbase API (`api.coinbase.com`)
+3. CoinGecko API (`api.coingecko.com`)
 
-### GitHub Pages
-1. Edit `vite.config.js`, uncomment & isi `base: "/REPO_NAME/"`
-2. Build: `npm run build`
-3. Push folder `dist/` ke branch `gh-pages`, atau pakai GitHub Actions
+**Saham** (Yahoo Finance via 3 CORS proxy berurutan):
+1. `corsproxy.io`
+2. `api.allorigins.win`
+3. `api.codetabs.com`
 
-## Catatan Penggunaan
+Tidak ada API key yang dibutuhkan. Semua dipakai gratis dengan rate limit.
 
-### Simbol yang didukung
-- **Kripto**: `BTC`, `ETH`, `SOL`, `XRP`, `BNB`, `DOGE`, `ADA`, dll. — pakai simbol pendek tanpa `USDT`
-- **Saham US**: ticker biasa seperti `AAPL`, `TSLA`, `NVDA`, `MSFT`
-- **Saham IDX**: wajib akhiran `.JK` — contoh `BBCA.JK`, `BBRI.JK`, `TLKM.JK`, `BMRI.JK`
+### Format Simbol
 
-### Money Management
-Setiap trade baru otomatis menghitung position size berdasarkan:
-```
-Qty = (Modal × Risk%) ÷ |Entry − Stop Loss|
-```
-Contoh: Modal $10.000, risk 1%, entry BTC $60.000, SL $58.500 → otomatis qty = 0.0667 BTC (risk = $100)
+- **Kripto**: BTC, ETH, SOL, BNB, XRP, DOGE, dst (tanpa USDT)
+- **Saham US**: AAPL, TSLA, NVDA, MSFT, GOOGL, dst
+- **Saham IDX**: tambahkan `.JK` → BBCA.JK, BBRI.JK, TLKM.JK, BMRI.JK, dst
 
-### Currency
-Toggle USD/IDR di tab Modal **hanya mengubah label tampilan**, bukan konversi. Sesuaikan ukuran modal manual setelah ganti currency.
+## 💾 Data Storage
 
-## Tech Stack
+Semua data disimpan di **browser localStorage**. Artinya:
 
-- React 18
-- Vite 5
-- Recharts (grafik)
-- Lucide React (icons)
-- localStorage (persistensi)
+- ✅ Tidak butuh backend, gratis hosting di GitHub Pages
+- ✅ Data privacy 100% (cuma di device Anda)
+- ⚠️ Data tidak sync antar device/browser
+- ⚠️ Clear browser data = data hilang
 
-## Lisensi
+Untuk backup, kosongkan localStorage `trades:all` dan `settings:account` lewat DevTools jika perlu pindah device.
 
-Bebas dipakai untuk pribadi.
+## 🎨 Tech Stack
+
+- **React 18** — UI library
+- **Vite 5** — build tool
+- **Recharts** — chart library
+- **Lucide React** — icons
+- **Inline styles + Google Fonts** — Fraunces (serif), JetBrains Mono, Manrope
+
+## 📝 Tips Penggunaan
+
+1. **Set Modal Awal & Currency** dulu di tab "Modal" — pilih USD atau IDR
+2. **Set Risiko per Trade** di tab "Risiko" (umumnya 1-2% per trade)
+3. **Tambah Trade**: tap "Trade Baru", isi simbol, tap "Cek Harga", isi SL & TP
+4. **Pakai Position Sizer**: tap "Pakai Qty" untuk auto-fill quantity berdasarkan risk %
+5. **Sync Harga**: tap tombol "Sync" untuk update harga semua open trade sekaligus
+6. **Tutup Trade**: tap "Tutup Trade" lalu isi exit price untuk realisasi P/L
+7. **Review**: cek tab "Analitik" untuk performance, "Modal" untuk pertumbuhan
+
+## 📄 License
+
+MIT — bebas dipakai dan dimodif.
