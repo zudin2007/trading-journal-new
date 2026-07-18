@@ -7,17 +7,19 @@
 }
 
 :root {
-  --bg-dark: #0a0e1a;
-  --bg-card: #1a1f2e;
-  --bg-input: #252d3d;
-  --text-primary: #e8ecf1;
-  --text-secondary: #a8aeb8;
-  --text-muted: #7a7f88;
-  --accent-gold: #f5b942;
+  --bg-dark: #1a1a2e;
+  --bg-card: #24243e;
+  --bg-input: #2d2d44;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9aa0b6;
+  --text-muted: #8a8fa8;
+  --accent-orange: #ff7a00;
+  --accent-cyan: #4fc3f7;
+  --accent-purple: #ab47bc;
+  --accent-yellow: #ffeb3b;
   --accent-green: #26d07c;
-  --accent-red: #f6465d;
-  --accent-blue: #6366f1;
-  --border-color: #2d3748;
+  --accent-red: #ff6b6b;
+  --border-color: #3a3a52;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
@@ -74,7 +76,7 @@ body {
   font-family: 'Fraunces', serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--accent-gold);
+  color: var(--accent-orange);
   letter-spacing: -0.02em;
 }
 
@@ -146,8 +148,8 @@ body {
 }
 
 .tab-btn.active {
-  color: var(--accent-gold);
-  border-bottom-color: var(--accent-gold);
+  color: var(--accent-orange);
+  border-bottom-color: var(--accent-orange);
 }
 
 .tab-content {
@@ -179,7 +181,7 @@ body {
 }
 
 .card:hover {
-  border-color: var(--accent-gold);
+  border-color: var(--accent-orange);
   box-shadow: 0 10px 30px rgba(245, 185, 66, 0.1);
 }
 
@@ -260,7 +262,7 @@ body {
 
 .form-input:focus {
   outline: none;
-  border-color: var(--accent-gold);
+  border-color: var(--accent-orange);
   box-shadow: 0 0 0 3px rgba(245, 185, 66, 0.1);
 }
 
@@ -279,7 +281,7 @@ body {
 
 .form-select:focus {
   outline: none;
-  border-color: var(--accent-gold);
+  border-color: var(--accent-orange);
   box-shadow: 0 0 0 3px rgba(245, 185, 66, 0.1);
 }
 
@@ -298,7 +300,7 @@ body {
 }
 
 .btn-primary {
-  background: var(--accent-gold);
+  background: var(--accent-orange);
   color: var(--bg-dark);
 }
 
@@ -315,7 +317,7 @@ body {
 
 .btn-secondary:hover {
   background: var(--border-color);
-  border-color: var(--accent-gold);
+  border-color: var(--accent-orange);
 }
 
 .btn-danger {
@@ -386,7 +388,7 @@ body {
   font-family: 'Fraunces', serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent-gold);
+  color: var(--accent-orange);
 }
 
 .modal-body {
@@ -409,7 +411,7 @@ body {
 }
 
 .trade-row:hover {
-  border-color: var(--accent-gold);
+  border-color: var(--accent-orange);
   box-shadow: 0 10px 30px rgba(245, 185, 66, 0.1);
 }
 
@@ -426,7 +428,7 @@ body {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.3rem;
   font-weight: 600;
-  color: var(--accent-gold);
+  color: var(--accent-orange);
 }
 
 .trade-status {
@@ -498,7 +500,7 @@ body {
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--accent-gold);
+  color: var(--accent-orange);
 }
 
 .alert {
@@ -545,7 +547,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: var(--accent-gold);
+  color: var(--accent-orange);
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 1rem;
 }
@@ -560,7 +562,7 @@ body {
   width: 1.2rem;
   height: 1.2rem;
   cursor: pointer;
-  accent-color: var(--accent-gold);
+  accent-color: var(--accent-orange);
 }
 
 .checkbox-label {
@@ -582,7 +584,7 @@ body {
   width: 1rem;
   height: 1rem;
   border: 2px solid var(--border-color);
-  border-top-color: var(--accent-gold);
+  border-top-color: var(--accent-orange);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

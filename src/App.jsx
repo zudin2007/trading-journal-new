@@ -199,6 +199,22 @@ const App = () => {
     }
   }
 
+  const handleSyncPrices = async () => {
+    setPriceLoading(true)
+    try {
+      for (const trade of openTrades) {
+        try {
+          await fetchPrice(trade.symbol)
+        } catch (err) {
+          console.log(`Gagal update ${trade.symbol}`)
+        }
+      }
+      setMessage({ type: 'success', text: 'Harga di-sync' })
+    } finally {
+      setPriceLoading(false)
+    }
+  }
+
   const calculateTradeStats = (trade) => {
     const riskPoints = Math.abs(trade.entryPrice - trade.stopLoss)
     const rewardPoints = Math.abs(trade.takeProfit - trade.entryPrice)
@@ -346,6 +362,16 @@ const App = () => {
         </div>
 
         <div className={`tab-content ${activeTab === 'dashboard' ? 'active' : ''}`}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Dashboard</h2>
+            {openTrades.length > 0 && (
+              <button className="btn btn-secondary btn-small" onClick={handleSyncPrices} disabled={priceLoading}>
+                {priceLoading && <span className="spinner" />}
+                {!priceLoading && <RefreshCw size={14} />}
+                Sync Prices
+              </button>
+            )}
+          </div>
           <div className="grid-4">
             <div className="stat-box">
               <div className="stat-label">Total Trades</div>
@@ -448,14 +474,15 @@ const App = () => {
         </div>
 
         <div className={`tab-content ${activeTab === 'jurnal' ? 'active' : ''}`}>
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Trade Journal</h2>
             <button className="btn btn-primary" onClick={() => {
               setFormData({ symbol: '', entryPrice: '', stopLoss: '', takeProfit: '', quantity: '', entryDate: new Date().toISOString().split('T')[0], exitPrice: '', exitDate: '' })
               setEditingId(null)
               setShowModal(true)
             }}>
               <Plus size={18} />
-              Trade Baru
+              Add Trade
             </button>
           </div>
 
@@ -588,7 +615,7 @@ const App = () => {
                         contentStyle={{ background: '#1a1f2e', border: '1px solid #2d3748' }}
                         labelStyle={{ color: '#e8ecf1' }}
                       />
-                      <Line type="monotone" dataKey="equity" stroke="#f5b942" dot={false} />
+                      <Line type="monotone" dataKey="equity" stroke="#ff7a00" dot={false} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
@@ -632,7 +659,7 @@ const App = () => {
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title">{editingId ? '✏️ Edit Trade' : '➕ Trade Baru'}</h2>
+              <h2 className="modal-title">{editingId ? 'Edit Trade' : 'Add New Trade'}</h2>
             </div>
             <div className="modal-body">
               <div className="form-group">
